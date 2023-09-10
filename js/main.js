@@ -7,7 +7,7 @@ function agregarProducto() {
 
     productosSeleccionados.push({ producto, localidad, cantidad });
 
-    // Mostrar los productos agregados en una lista
+
     let listaProductos = document.getElementById("listaProductos");
     let li = document.createElement("li");
     li.textContent = `${cantidad} ${producto}(s) con envío a ${localidad}`;
@@ -60,6 +60,7 @@ function calcularCostoTotal() {
     }
 
     console.log(`El costo total de todos los productos es de: $${costoTotal.toFixed(2)}`);
+
 
     let resultadoDiv = document.getElementById("resultado");
     resultadoDiv.innerHTML = `El costo total de todos los productos es de: $${costoTotal.toFixed(2)}`;
