@@ -1,40 +1,65 @@
-let productosSeleccionados = [];
-
-function agregarProducto() {
-    let producto = document.getElementById("producto").value;
-    let localidad = document.getElementById("localidad").value;
-    let cantidad = parseInt(document.getElementById("cantidad").value);
-
-    productosSeleccionados.push({ producto, localidad, cantidad });
-
-
-    let listaProductos = document.getElementById("listaProductos");
-    let li = document.createElement("li");
-    li.textContent = `${cantidad} ${producto}(s) con envío a ${localidad}`;
-    listaProductos.appendChild(li);
-
-    console.log(`Producto agregado: ${cantidad} ${producto}(s) con envío a ${localidad}`);
+function obtenerNombreUsuario() {
+    let nombre = prompt("Por favor, ingresa tu nombre:");
+    return nombre || "Usuario"; 
 }
 
-function calcularCostoProducto(producto) {
-    let preciosProductos = {
-        A: 20,
-        B: 25,
-        C: 35
-    };
+function mostrarSaludo(nombreUsuario) {
+    console.log(`Hola, ${nombreUsuario}! La página se ha cargado.`);
+}
 
-    console.log(`Producto seleccionado: ${producto}`);
+let nombreUsuario = obtenerNombreUsuario();
+mostrarSaludo(nombreUsuario);
+
+let productosSeleccionados = [];
+
+function agregarProducto(producto, localidad, cantidad) {
+    productosSeleccionados.push({ producto, localidad, cantidad });
+}
+
+function buscarProductoPorNombre(nombre) {
+    const productoEncontrado = productosSeleccionados.find(producto => producto.producto === nombre);
+
+    if (productoEncontrado) {
+        console.log(`Producto encontrado: ${productoEncontrado.cantidad} ${productoEncontrado.producto}(s) con envío a ${productoEncontrado.localidad}`);
+    } else {
+        console.log(`Producto no encontrado.`);
+    }
+
+    return productoEncontrado;
+}
+
+function filtrarProductosPorLocalidad(localidad) {
+    const productosFiltrados = productosSeleccionados.filter(producto => producto.localidad === localidad);
+
+    if (productosFiltrados.length > 0) {
+        console.log(`Productos encontrados en ${localidad}:`);
+        productosFiltrados.forEach(producto => {
+            console.log(`${producto.cantidad} ${producto.producto}(s) con envío a ${producto.localidad}`);
+        });
+    } else {
+        console.log(`No se encontraron productos en ${localidad}.`);
+    }
+
+    return productosFiltrados;
+}
+
+const preciosProductos = {
+    A: 20,
+    B: 25,
+    C: 35
+};
+
+const preciosLocalidades = {
+    Montevideo: 100,
+    Canelones: 250,
+    Maldonado: 400
+};
+
+function calcularCostoProducto(producto) {
     return preciosProductos[producto] || 0;
 }
 
 function calcularCostoLocalidad(localidad) {
-    let preciosLocalidades = {
-        Montevideo: 100,
-        Canelones: 250,
-        Maldonado: 400
-    };
-
-    console.log(`Localidad seleccionada: ${localidad}`);
     return preciosLocalidades[localidad] || 0;
 }
 
@@ -43,15 +68,14 @@ function calcularCostoTotal() {
 
     for (let i = 0; i < productosSeleccionados.length; i++) {
         let { producto, localidad, cantidad } = productosSeleccionados[i];
+        
         let costoProducto = calcularCostoProducto(producto);
         let costoLocalidad = calcularCostoLocalidad(localidad);
 
         if (cantidad > 3) {
             costoProducto *= 0.9;
-            console.log(`Se aplicó un descuento del 10% para ${cantidad} ${producto}(s).`);
         } else if (cantidad > 1) {
             costoProducto *= 0.95;
-            console.log(`Se aplicó un descuento del 5% para ${cantidad} ${producto}(s).`);
         }
 
         let costoProductoTotal = costoProducto * cantidad;
@@ -60,8 +84,42 @@ function calcularCostoTotal() {
     }
 
     console.log(`El costo total de todos los productos es de: $${costoTotal.toFixed(2)}`);
-
-
-    let resultadoDiv = document.getElementById("resultado");
-    resultadoDiv.innerHTML = `El costo total de todos los productos es de: $${costoTotal.toFixed(2)}`;
 }
+
+function mostrarOpcionesYSeleccionar(opciones) {
+    const eleccion = prompt(opciones);
+
+    return eleccion;
+}
+
+function iniciarSimulador() {
+    while (true) {
+        const opcion = prompt("Selecciona una opción:\n1. Agregar Producto\n2. Buscar Producto\n3. Filtrar por Localidad\n4. Calcular Costo Total\n5. Salir");
+
+        switch (opcion) {
+            case "1":
+                const producto = prompt("Ingrese la letra del producto en mayuscula (A, B, C):");
+                const localidad = prompt("Ingrese la localidad de envío (Montevideo, Canelones, Maldonado):");
+                const cantidad = parseInt(prompt("Ingrese la cantidad de productos:"));
+                agregarProducto(producto, localidad, cantidad);
+                break;
+            case "2":
+                const nombreProductoABuscar = prompt("Ingrese la letra del producto a buscar:");
+                buscarProductoPorNombre(nombreProductoABuscar);
+                break;
+            case "3":
+                const localidadAFiltrar = prompt("Ingrese la localidad para filtrar los productos:");
+                filtrarProductosPorLocalidad(localidadAFiltrar);
+                break;
+            case "4":
+                calcularCostoTotal();
+                break;
+            case "5":
+                return;
+            default:
+                alert("Opción no válida. Por favor, elija una opción válida.");
+        }
+    }
+}
+
+iniciarSimulador();

@@ -1,1 +1,57 @@
-body {background-color:cadetblue ;}
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #967777;
+    padding: 20px;
+}
+
+/* Estilo para el encabezado */
+h1 {
+    color: #333;
+}
+
+/* Estilo para los controles de formulario */
+label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+select, input {
+    padding: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #958c8c;
+    border-radius: 5px;
+    width: 30%;
+}
+
+/* Estilo para los botones */
+button {
+    background-color: #3e4953;
+    color: rgb(180, 168, 168);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Estilo para la lista de productos */
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 5px;
+}
+
+/* Estilo para el resultado */
+#resultado {
+    font-weight: bold;
+    margin-top: 10px;
+    font-size: 18px;
+    color: #333;
+}
