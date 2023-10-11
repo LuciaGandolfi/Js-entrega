@@ -1,125 +1,150 @@
-function obtenerNombreUsuario() {
-    let nombre = prompt("Por favor, ingresa tu nombre:");
-    return nombre || "Usuario"; 
-}
+document.addEventListener("DOMContentLoaded", function() {
+    let preciosProductos = {
+        A: 20,
+        B: 25,
+        C: 35
+    };
 
-function mostrarSaludo(nombreUsuario) {
-    console.log(`Hola, ${nombreUsuario}! La página se ha cargado.`);
-}
+    let preciosLocalidades = {
+        Montevideo: 100,
+        Canelones: 250,
+        Maldonado: 400
+    };
 
-let nombreUsuario = obtenerNombreUsuario();
-mostrarSaludo(nombreUsuario);
-
-let productosSeleccionados = [];
-
-function agregarProducto(producto, localidad, cantidad) {
-    productosSeleccionados.push({ producto, localidad, cantidad });
-}
-
-function buscarProductoPorNombre(nombre) {
-    const productoEncontrado = productosSeleccionados.find(producto => producto.producto === nombre);
-
-    if (productoEncontrado) {
-        console.log(`Producto encontrado: ${productoEncontrado.cantidad} ${productoEncontrado.producto}(s) con envío a ${productoEncontrado.localidad}`);
-    } else {
-        console.log(`Producto no encontrado.`);
+    function obtenerNombreUsuario() {
+        const nombreUsuario = localStorage.getItem('nombreUsuario');
+        return nombreUsuario || 'Usuario';
     }
 
-    return productoEncontrado;
-}
+    function mostrarCostoTotal(nombreUsuario, costoTotal) {
+        const resultadoElement = document.getElementById('resultado');
+        resultadoElement.textContent = `Hola, ${nombreUsuario}! El costo total es: $${costoTotal.toFixed(2)}`;
+    }
 
-function filtrarProductosPorLocalidad(localidad) {
-    const productosFiltrados = productosSeleccionados.filter(producto => producto.localidad === localidad);
+    function actualizarProductosEnStorage() {
+        localStorage.setItem('productosSeleccionados', JSON.stringify(productosSeleccionados));
+    }
 
-    if (productosFiltrados.length > 0) {
-        console.log(`Productos encontrados en ${localidad}:`);
-        productosFiltrados.forEach(producto => {
-            console.log(`${producto.cantidad} ${producto.producto}(s) con envío a ${producto.localidad}`);
+    function cargarProductosDesdeStorage() {
+        const productosGuardados = localStorage.getItem('productosSeleccionados');
+        return productosGuardados ? JSON.parse(productosGuardados) : [];
+    }
+
+    let productosSeleccionados = cargarProductosDesdeStorage();
+
+    function agregarProducto(producto, localidad, cantidad) {
+        const productoExistente = productosSeleccionados.find(item => item.producto === producto && item.localidad === localidad);
+        if (productoExistente) {
+            productoExistente.cantidad += cantidad;
+        } else {
+            productosSeleccionados.push({ producto, localidad, cantidad });
+        }
+        actualizarProductosEnStorage();
+        mostrarResultados();
+    }
+
+    function mostrarResultados() {
+        const listaProductosElement = document.getElementById('listaProductos');
+        listaProductosElement.innerHTML = '';
+
+        productosSeleccionados.forEach(producto => {
+            const listItem = document.createElement('li');
+            listItem.textContent = `${producto.cantidad} ${producto.producto}(s) con envío a ${producto.localidad}`;
+            listaProductosElement.appendChild(listItem);
         });
-    } else {
-        console.log(`No se encontraron productos en ${localidad}.`);
     }
 
-    return productosFiltrados;
-}
+    const agregarProductoButton = document.getElementById('agregarprd');
+    agregarProductoButton.addEventListener('click', function() {
+        const producto = document.getElementById('producto').value;
+        const localidad = document.getElementById('localidad').value;
+        const cantidad = parseInt(document.getElementById('cantidad').value);
 
-const preciosProductos = {
-    A: 20,
-    B: 25,
-    C: 35
-};
+        agregarProducto(producto, localidad, cantidad);
+    });
 
-const preciosLocalidades = {
-    Montevideo: 100,
-    Canelones: 250,
-    Maldonado: 400
-};
+    const calcularCostoTotalBtn = document.getElementById('calcularCostoTotalBtn');
+    calcularCostoTotalBtn.addEventListener('click', function() {
+        calcularCostoTotal();
+    });
 
-function calcularCostoProducto(producto) {
-    return preciosProductos[producto] || 0;
-}
+    function calcularCostoTotal() {
+        let costoTotal = 0;
 
-function calcularCostoLocalidad(localidad) {
-    return preciosLocalidades[localidad] || 0;
-}
+        for (let i = 0; i < productosSeleccionados.length; i++) {
+            const { producto, localidad, cantidad } = productosSeleccionados[i];
 
-function calcularCostoTotal() {
-    let costoTotal = 0;
+            let costoProducto = preciosProductos[producto];
+            const costoLocalidad = preciosLocalidades[localidad];
 
-    for (let i = 0; i < productosSeleccionados.length; i++) {
-        let { producto, localidad, cantidad } = productosSeleccionados[i];
-        
-        let costoProducto = calcularCostoProducto(producto);
-        let costoLocalidad = calcularCostoLocalidad(localidad);
+            if (cantidad > 3) {
+                costoProducto *= 0.9;
+            } else if (cantidad > 1) {
+                costoProducto *= 0.95;
+            }
 
-        if (cantidad > 3) {
-            costoProducto *= 0.9;
-        } else if (cantidad > 1) {
-            costoProducto *= 0.95;
+            const costoProductoTotal = costoProducto * cantidad;
+            costoTotal += costoProductoTotal;
         }
 
-        let costoProductoTotal = costoProducto * cantidad;
-        costoTotal += costoProductoTotal;
-        console.log(`El costo total de ${cantidad} ${producto}(s) con envío a ${localidad} es de: $${costoProductoTotal.toFixed(2)}`);
+        const nombreUsuario = document.getElementById('nombreUsuario').value;
+        mostrarCostoTotal(nombreUsuario, costoTotal);
     }
 
-    console.log(`El costo total de todos los productos es de: $${costoTotal.toFixed(2)}`);
-}
+    const busquedaProductoBtn = document.getElementById('busquedaProductoBtn');
+    busquedaProductoBtn.addEventListener('click', function() {
+        buscarProductoPorNombre();
+    });
 
-function mostrarOpcionesYSeleccionar(opciones) {
-    const eleccion = prompt(opciones);
+    function buscarProductoPorNombre() {
+        const nombreProductoBuscado = document.getElementById('busquedaProducto').value;
+        const resultadosBusqueda = productosSeleccionados.filter(producto => producto.producto === nombreProductoBuscado);
+        mostrarResultadosBusqueda(resultadosBusqueda);
+    }
 
-    return eleccion;
-}
+    function mostrarResultadosBusqueda(resultados) {
+        const resultadoBusquedaElement = document.getElementById('resultadoBusqueda');
+        resultadoBusquedaElement.innerHTML = '';
 
-function iniciarSimulador() {
-    while (true) {
-        const opcion = prompt("Selecciona una opción:\n1. Agregar Producto\n2. Buscar Producto\n3. Filtrar por Localidad\n4. Calcular Costo Total\n5. Salir");
-
-        switch (opcion) {
-            case "1":
-                const producto = prompt("Ingrese la letra del producto en mayuscula (A, B, C):");
-                const localidad = prompt("Ingrese la localidad de envío (Montevideo, Canelones, Maldonado):");
-                const cantidad = parseInt(prompt("Ingrese la cantidad de productos:"));
-                agregarProducto(producto, localidad, cantidad);
-                break;
-            case "2":
-                const nombreProductoABuscar = prompt("Ingrese la letra del producto a buscar:");
-                buscarProductoPorNombre(nombreProductoABuscar);
-                break;
-            case "3":
-                const localidadAFiltrar = prompt("Ingrese la localidad para filtrar los productos:");
-                filtrarProductosPorLocalidad(localidadAFiltrar);
-                break;
-            case "4":
-                calcularCostoTotal();
-                break;
-            case "5":
-                return;
-            default:
-                alert("Opción no válida. Por favor, elija una opción válida.");
+        if (resultados.length === 0) {
+            resultadoBusquedaElement.textContent = 'No se encontraron productos con ese nombre.';
+        } else {
+            const listaResultados = document.createElement('ul');
+            resultados.forEach(producto => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `${producto.cantidad} ${producto.producto}(s) con envío a ${producto.localidad}`;
+                listaResultados.appendChild(listItem);
+            });
+            resultadoBusquedaElement.appendChild(listaResultados);
         }
     }
-}
 
-iniciarSimulador();
+    const filtrarLocalidadBtn = document.getElementById('filtrarLocalidadBtn');
+    filtrarLocalidadBtn.addEventListener('click', function() {
+        filtrarProductosPorLocalidad();
+    });
+
+    function filtrarProductosPorLocalidad() {
+        const localidadFiltrar = document.getElementById('filtrarLocalidad').value;
+        const resultadosFiltrados = productosSeleccionados.filter(producto => producto.localidad === localidadFiltrar);
+        mostrarResultadosBusqueda(resultadosFiltrados);
+    }
+
+    const clearProductosBtn = document.getElementById('clearProductosBtn');
+    clearProductosBtn.addEventListener('click', function() {
+        productosSeleccionados = [];
+        actualizarProductosEnStorage();
+        mostrarResultados();
+        const resultadoElement = document.getElementById('resultado');
+        resultadoElement.textContent = '';
+
+        document.getElementById('busquedaProducto').value = '';
+        document.getElementById('filtrarLocalidad').value = '';
+
+
+        document.getElementById('resultadoBusqueda').innerHTML = '';
+    });
+
+    const nombreUsuario = obtenerNombreUsuario();
+    mostrarResultados();
+});

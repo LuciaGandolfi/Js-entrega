@@ -5,10 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora de Envios</title>
     <link rel="stylesheet" href="css/style.css">
-    
 </head>
 <body>
     <h1>Calculadora de Costo de Envío</h1>
+
+    <label for="Nombre"></label>
+    <input type="text" id="nombreUsuario" placeholder="Ingrese su nombre">
+
     
     <label for="producto">Seleccione un producto:</label>
     <select id="producto">
@@ -30,19 +33,23 @@
     <button id="agregarprd">Agregar Producto</button><br>
     <ul id="listaProductos"></ul>
     <button id="calcularCostoTotalBtn">Calcular Costo Total</button><br>
-    <div id="resultado"></div>
+    
+    <div id="resultado"></div> 
 
-    <button id="busquedaProductoBtn">Busca producto por nombre</button>
+    <button id="busquedaProductoBtn">Buscar producto por nombre</button>
     <input type="text" id="busquedaProducto">
-
-    <label for="filtrarlocalidad">Filtrar productos por Localidad</label>
-    <select name="" id="filtrarLocalidad">
+    
+    <label for="filtrarLocalidad">Filtrar productos por Localidad</label>
+    <select id="filtrarLocalidad">
         <option value="Montevideo">Montevideo</option>
         <option value="Canelones">Canelones</option>
         <option value="Maldonado">Maldonado</option>
     </select>
-    <button id="filtrarlocalidadBtn">Filtrar</button>
+    <button id="filtrarLocalidadBtn">Filtrar</button>
     <div id="resultadoBusqueda"></div>
+    <div>
+        <button id="clearProductosBtn">Clear</button>
+    </div>
     <script src="js/main.js"></script>
 </body>
 </html>
