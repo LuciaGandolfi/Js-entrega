@@ -5,51 +5,74 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora de Envios</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
 </head>
 <body>
-    <h1>Calculadora de Costo de Envío</h1>
-
-    <label for="Nombre"></label>
-    <input type="text" id="nombreUsuario" placeholder="Ingrese su nombre">
-
-    
-    <label for="producto">Seleccione un producto:</label>
-    <select id="producto">
-        <option value="A">Producto A</option>
-        <option value="B">Producto B</option>
-        <option value="C">Producto C</option>
-    </select><br>
-    
-    <label for="cantidad">Cantidad de productos:</label>
-    <input type="number" id="cantidad" min="1" value="1"><br>
-    
-    <label for="localidad">Seleccione una localidad de envío:</label>
-    <select id="localidad">
-        <option value="Montevideo">Montevideo</option>
-        <option value="Canelones">Canelones</option>
-        <option value="Maldonado">Maldonado</option>
-    </select><br>
-    
-    <button id="agregarprd">Agregar Producto</button><br>
-    <ul id="listaProductos"></ul>
-    <button id="calcularCostoTotalBtn">Calcular Costo Total</button><br>
-    
-    <div id="resultado"></div> 
-
-    <button id="busquedaProductoBtn">Buscar producto por nombre</button>
-    <input type="text" id="busquedaProducto">
-    
-    <label for="filtrarLocalidad">Filtrar productos por Localidad</label>
-    <select id="filtrarLocalidad">
-        <option value="Montevideo">Montevideo</option>
-        <option value="Canelones">Canelones</option>
-        <option value="Maldonado">Maldonado</option>
-    </select>
-    <button id="filtrarLocalidadBtn">Filtrar</button>
-    <div id="resultadoBusqueda"></div>
-    <div>
-        <button id="clearProductosBtn">Clear</button>
+    <div class="navbar">
+        <div class="navbar-logo">
+            <img src="./assets/Logo.jpg" alt="Logo de la empresa">
+        </div>
+        <ul class="navbar-menu">
+            <li><a href="#">Inicio</a></li>
+            <li><a href="#">Productos</a></li>
+            <li><a href="#">Acerca de</a></li>
+            <li><a href="#">Contacto</a></li>
+        </ul>
     </div>
+    <h1>Calculadora de Costo de Envío</h1>
+    <div class="container">
+        <div class="recuadro" id="recuadro1">
+            <label for="nombreUsuario">Ingrese su nombre</label>
+            <input type="text" id="nombreUsuario" placeholder="Ingrese su nombre">
+
+            <label for="producto">Seleccione un producto:</label>
+            <select id="producto">
+                <option value="A">Producto A</option>
+                <option value="B">Producto B</option>
+                <option value="C">Producto C</option>
+                <option value="D">Producto D</option>
+            </select><br>
+
+            <label for="cantidad">Cantidad de productos:</label>
+            <input type="number" id="cantidad" min="1" value="1"><br>
+
+            <label for="localidad">Seleccione una localidad de envío:</label>
+            <select id="localidad">
+                <option value="Montevideo">Montevideo</option>
+                <option value="Canelones">Canelones</option>
+                <option value="Maldonado">Maldonado</option>
+            </select><br>
+
+            <button id="agregarprd">Agregar Producto</button><br>
+            <ul id="listaProductos"></ul>
+        </div>
+        <div class="recuadro" id="recuadro2">
+            <button id="calcularCostoTotalBtn">Calcular Costo Total</button>
+            <div id="resultado"></div>
+            <div>  
+                <button id="clearProductosBtn">Clear</button> 
+            </div>
+        </div>
+    </div>
+    <div id="recuadro3">
+        <button id="busquedaProductoBtn">Buscar producto por nombre</button>
+        <input type="text" id="busquedaProducto">
+        <label for="filtrarLocalidad">Filtrar productos por Localidad</label>
+        <select id="filtrarLocalidad">
+            <option value="Montevideo">Montevideo</option>
+            <option value="Canelones">Canelones</option>
+            <option value="Maldonado">Maldonado</option>
+        </select>
+        <button id="filtrarLocalidadBtn">Filtrar</button>
+        <div id="resultadoBusqueda"></div>
+      
+    </div>
+    <footer>
+        <div>
+            <p id="fecha-hora-actual" class="fecha-hora">Fecha y hora actual: </p>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/luxon@3.4.3/build/global/luxon.min.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>

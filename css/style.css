@@ -1,52 +1,53 @@
 body {
-    font-family: 'Arial', sans-serif;
-    text-align: center;
-    background-color: #c4b1b1;
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
     margin: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
+    padding: 0;
 }
 
-/* Estilo para el encabezado */
 h1 {
-    color: #333;
+    padding-top: 50px;
     font-size: 24px;
+    color: #333;
+    text-align: center;
+    margin: 20px 0;
 }
 
-/* Estilo para los controles de formulario */
 label {
+    display: block;
     font-weight: bold;
-    margin-right: 5px;
-    color: #666;
+    color: #333;
+    margin-bottom: 5px;
 }
 
-select, input {
+input, select {
+    width: 100%;
     padding: 10px;
     margin: 5px 0;
     border: 1px solid #ccc;
     border-radius: 5px;
-    width: 50%;
+    font-size: 14px;
 }
 
-/* Estilo para los botones */
 button {
-    background-color: #183049;
+    background-color: #0084d2;
     color: #fff;
-    padding: 10px 20px;
+    padding: 8px 16px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     margin: 10px 0;
+    display: block;
+    width: 50%;
+    text-align: center;
+    font-weight: bold;
+    font-size: 14px;
 }
 
 button:hover {
     background-color: #0056b3;
 }
 
-/* Estilo para la lista de productos */
 ul {
     list-style: none;
     padding: 0;
@@ -54,12 +55,181 @@ ul {
 
 li {
     margin-bottom: 5px;
+    font-size: 14px;
 }
 
-/* Estilo para el resultado */
 #resultado {
     font-weight: bold;
     margin-top: 10px;
     font-size: 18px;
     color: #333;
+}
+
+#busquedaProducto {
+    width: 50%;
+    padding: 5px;
+    font-size: 14px;
+}
+
+#filtrarLocalidad {
+    width: 50%;
+    padding: 10px;
+    font-size: 14px;
+}
+
+.fecha-hora {
+    font-size: 15px;
+    font-family: Arial, sans-serif;
+    color: #1c2229;
+    margin: 24px;
+    text-align: center;
+}
+
+#agregarprd {
+    background-color: #00a75d;
+    width: 50%; 
+    margin: 20px auto; 
+}
+#calcularCostoTotalBtn {
+    background-color: #f27027;
+    width: 100%;
+    margin: 20px auto 10px;
+}
+
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+}
+
+.recuadro {
+    width: 48%;
+    padding: 20px;
+    background-color: #f3f3f3;
+    border: 1px solid #ccc;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+#recuadro2 {
+    width: 48%;
+    padding: 20px;
+    background-color: #f3f3f3;
+    border: 1px solid #ccc;
+    text-align: center;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    display: inline-block;
+}
+
+#calcularCostoTotalBtn {
+    background-color: #f27027;
+    width: 70%;
+    margin: 20px auto 10px;
+    display: block; 
+}
+
+#clearProductosBtn {
+    background-color: #3524b8;
+    width: 70%; 
+    margin: 10px auto; 
+}
+
+#resultado {
+    font-weight: bold;
+    font-size: 18px;
+    color: #333;
+    margin: 10px 0 20px;
+}
+
+#recuadro3 {
+    margin: 20px auto; 
+    width: 30%;
+    padding: 20px;
+    background-color: #f3f3f3;
+    border: 1px solid #ccc;
+    text-align: center;
+    box-sizing: border-box;
+  
+}
+
+
+#busquedaProducto, #filtrarLocalidad {
+    width: 80%;
+    padding: 10px;
+    margin: 10px auto;
+}
+
+#busquedaProductoBtn, #filtrarLocalidadBtn {
+    width: 80%;
+    padding: 8px 16px;
+    background-color: #f27027;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px auto;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+#nombreUsuario {
+    width: 98%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+#cantidad {
+    width: 95%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #263138;
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    border-bottom: 1px solid #0056b3;
+    border-radius: 0 0 10px 10px;
+}
+
+.navbar-logo {
+    margin-right: auto;
+}
+
+.navbar-logo img {
+    height: 80px;
+}
+
+.navbar-menu {
+    margin: auto;
+    margin-left: 30px;
+}
+
+.navbar-menu li {
+    margin: 0 20px;
+    display: inline;
+}
+
+.navbar-menu a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.navbar-menu a:hover {
+    color: #0056b3;
 }
